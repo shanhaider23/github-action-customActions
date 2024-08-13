@@ -1,16 +1,19 @@
 name: 'Get & Cache Dependencies'
-description: 'Get the dependencies(via npm) and chache them'
+description: 'Get the dependencies (via npm) and cache them'
+inputs:
+  cache-key:
+    description: 'Cache key for the dependencies'
+    required: true
 run:
   using: 'composite'
   steps:
     - name: Cache dependencies
-      id: cache 
+      id: cache
       uses: actions/cache@v3
       with:
         path: node_modules
-        key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+        key: ${{ inputs.cache-key }}
     - name: Install dependencies
       if: steps.cache.outputs.cache-hit != 'true'
       run: npm ci
       shell: bash
-    
