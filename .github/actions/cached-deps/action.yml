@@ -5,6 +5,10 @@ inputs:
     description: 'whether to cache dependencies or not'
     required: false
     default: 'true'
+  cache-key:
+    description: 'Key to use for caching dependencies'
+    required: true
+
 run:
   using: 'composite'
   steps:
@@ -14,7 +18,7 @@ run:
       uses: actions/cache@v3
       with:
         path: node_modules
-        key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+        key: ${{ inputs.cache-key }}
     - name: Install dependencies
       if: steps.cache.outputs.cache-hit != 'true' || inputs.caching != 'true'
       run: npm ci
