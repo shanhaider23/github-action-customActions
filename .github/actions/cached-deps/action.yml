@@ -5,7 +5,7 @@ run:
   steps:
     - name: Cache dependencies
       id: cache 
-      uses: actions/cache@v4
+      uses: actions/cache@v3
       with:
         path: node_modules
         key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
